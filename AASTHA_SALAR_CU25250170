@@ -1,0 +1,118 @@
+/*import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter N: ");
+        int N = sc.nextInt();
+        System.out.print("Enter K: ");
+        int K = sc.nextInt();
+        int[] arr = new int[N];
+        System.out.println("Enter " + N + " elements:");
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+        }
+        int windowSum = 0;
+        for (int i = 0; i < K; i++) {
+            windowSum += arr[i];
+        }
+        int maxSum = windowSum;
+        for (int i = K; i < N; i++) {
+            windowSum = windowSum + arr[i] - arr[i - K];
+
+            if (windowSum > maxSum) {
+                maxSum = windowSum;
+            }
+        }
+        System.out.println("Maximum sum = " + maxSum);
+sc.close();
+    }
+}
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String s = sc.nextLine();
+
+        HashSet<Character> set = new HashSet<>();
+
+        int left = 0;
+        int maxLength = 0;
+        for (int right = 0; right < s.length(); right++) {
+            while (set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+            set.add(s.charAt(right));
+            int currentLength = right - left + 1;
+            maxLength = Math.max(maxLength, currentLength);
+        }
+
+        System.out.println("Longest substring length = " + maxLength);
+
+        sc.close();
+    }
+}*/
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int k = sc.nextInt();
+
+        int[][] edge = new int[m][3];
+
+        for (int i = 0; i < m; i++) {
+            edge[i][0] = sc.nextInt();
+            edge[i][1] = sc.nextInt();
+            edge[i][2] = sc.nextInt();
+        }
+
+        int INF = 1000000000;
+
+        int[][] dp = new int[k + 1][n + 1];
+
+        for (int i = 0; i <= k; i++) {
+            Arrays.fill(dp[i], INF);
+        }
+
+        dp[0][1] = 0;
+
+        for (int e = 1; e <= k; e++) {
+            for (int i = 0; i < m; i++) {
+
+                int u = edge[i][0];
+                int v = edge[i][1];
+                int w = edge[i][2];
+
+                if (dp[e - 1][u] != INF)
+                    dp[e][v] = Math.min(dp[e][v], dp[e - 1][u] + w);
+
+                if (dp[e - 1][v] != INF)
+                    dp[e][u] = Math.min(dp[e][u], dp[e - 1][v] + w);
+            }
+        }
+
+        int ans = INF;
+
+        for (int e = 0; e <= k; e++) {
+            ans = Math.min(ans, dp[e][n]);
+        }
+
+        if (ans == INF)
+            System.out.println(-1);
+        else
+            System.out.println(ans);
+
+        sc.close();
+    }
+}
+
+
+
+
