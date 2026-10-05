@@ -1,0 +1,34 @@
+import java.util.*;
+public class Main {
+    static int digitSum(int num) {
+        int sum = 0;
+        while (num > 0) {
+            sum = sum + num % 10;
+            num = num / 10;
+        }
+        return sum;
+    }
+    static int solve(int N, int[] nums) {
+        int count = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = i + 1; j < N; j++) {
+                if (digitSum(nums[i]) == digitSum(nums[j])) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter N: ");
+        int N = sc.nextInt();
+        int[] nums = new int[N];
+        System.out.println("Enter " + N + " numbers:");
+        for (int i = 0; i < N; i++) {
+            nums[i] = sc.nextInt();
+        }
+        int answer = solve(N, nums);
+        System.out.println("Number of special pairs = " + answer);
+    }
+}
